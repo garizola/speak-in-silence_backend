@@ -32,15 +32,15 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  database: database_name_development
+  database: <%= ENV['DB'] %>
   pool: 5
-  host: dpg-csb9g25umphs73b96ev0-a
-  url: postgresql://speak_in_silence_db_user:2wpAHd7OwABOufTj8mljKDXFVRyqZZv0@dpg-csb9g25umphs73b96ev0-a.oregon-postgres.render.com/speak_in_silence_db
-  username: speak_in_silence_db_user
-  password: 2wpAHd7OwABOufTj8mljKDXFVRyqZZv0
+  host: <%= ENV['HOST'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
 
 development:
   <<: *default
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
