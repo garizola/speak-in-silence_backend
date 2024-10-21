@@ -1,32 +1,46 @@
-# SQLite. Versions 3.8.0 and up are supported.
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem "sqlite3"
-#
+# # SQLite. Versions 3.8.0 and up are supported.
+# #   gem install sqlite3
+# #
+# #   Ensure the SQLite 3 gem is defined in your Gemfile
+# #   gem "sqlite3"
+# #
+# default: &default
+#   adapter: sqlite3
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   timeout: 5000
+
+# development:
+#   <<: *default
+#   database: storage/development.sqlite3
+
+# # Warning: The database defined as "test" will be erased and
+# # re-generated from your development database when you run "rake".
+# # Do not set this db to the same as development or production.
+# test:
+#   <<: *default
+#   database: storage/test.sqlite3
+
+# # SQLite3 write its data on the local filesystem, as such it requires
+# # persistent disks. If you are deploying to a managed service, you should
+# # make sure it provides disk persistence, as many don't.
+# #
+# # Similarly, if you deploy your application as a Docker container, you must
+# # ensure the database is located in a persisted volume.
+# production:
+#   <<: *default
+#   # database: path/to/persistent/storage/production.sqlite3
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  database: database_name_development
+  pool: 5
+  host: dpg-csb9g25umphs73b96ev0-a
+  url: postgresql://speak_in_silence_db_user:2wpAHd7OwABOufTj8mljKDXFVRyqZZv0@dpg-csb9g25umphs73b96ev0-a.oregon-postgres.render.com/speak_in_silence_db
+  username: speak_in_silence_db_user
+  password: 2wpAHd7OwABOufTj8mljKDXFVRyqZZv0
 
 development:
   <<: *default
-  database: storage/development.sqlite3
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: storage/test.sqlite3
-
-
-# SQLite3 write its data on the local filesystem, as such it requires
-# persistent disks. If you are deploying to a managed service, you should
-# make sure it provides disk persistence, as many don't.
-#
-# Similarly, if you deploy your application as a Docker container, you must
-# ensure the database is located in a persisted volume.
 production:
-  <<: *default
-  # database: path/to/persistent/storage/production.sqlite3
+  url: <%= ENV['DATABASE_URL'] %>
